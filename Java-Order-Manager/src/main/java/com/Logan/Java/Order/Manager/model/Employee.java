@@ -26,7 +26,7 @@ public class Employee {
 
     private String lastName;
 
-    // Role
+    private String role;
 
     // Password
 
