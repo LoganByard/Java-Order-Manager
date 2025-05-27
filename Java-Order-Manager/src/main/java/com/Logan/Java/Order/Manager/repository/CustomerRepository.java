@@ -4,21 +4,22 @@ import com.Logan.Java.Order.Manager.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    Customer findByFirstNameAndLastNameIgnoreCase(String firstName, String lastName);
+    Optional<Customer> findByFirstNameAndLastNameIgnoreCase(String firstName, String lastName);
 
     List<Customer> findByLastNameIgnoreCase(String lastName);
 
-    Customer findByPhoneNumberAndEmail(String phoneNumber, String email);
+    Optional<Customer> findByPhoneNumberAndEmail(String phoneNumber, String email);
 
-    Customer findByFirstNameAndEmailIgnoreCase(String firstName, String email);
+    Optional<Customer> findByFirstNameAndEmailIgnoreCase(String firstName, String email);
 
-    Customer findByLastNameAndEmailIgnoreCase(String lastName, String email);
+    Optional<Customer> findByLastNameAndEmailIgnoreCase(String lastName, String email);
 
-    Customer findByEmailIgnoreCase(String email);
+    Optional<Customer> findByEmailIgnoreCase(String email);
 
     List<Customer> findByFirstNameContainingIgnoreCase(String name);
 

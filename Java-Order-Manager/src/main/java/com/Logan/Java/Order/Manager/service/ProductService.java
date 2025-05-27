@@ -3,9 +3,11 @@ package com.Logan.Java.Order.Manager.service;
 import com.Logan.Java.Order.Manager.model.Product;
 import com.Logan.Java.Order.Manager.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
-
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
 import java.util.List;
 
+@Service
 public class ProductService {
 
     private final ProductRepository productRepository;
@@ -16,15 +18,8 @@ public class ProductService {
 
     }
 
-    /**
-     * Creates a product
-     *
-     * @param name of product
-     * @param description of product
-     * @param price or product
-     * @param stockQuantity quantity in stock
-     */
     //TODO: security and role authentification
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public boolean createProduct(String name, String description, Double price, Integer stockQuantity){
 
         if (productRepository.existsByNameIgnoreCase(name)) {
@@ -38,11 +33,14 @@ public class ProductService {
 
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
     public Product findById(Long Id) {
 
         return productRepository.findById(Id).orElse(null);
 
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public void deleteProductById(Long Id){
 
         if (this.findById(Id) == null) {
@@ -53,12 +51,14 @@ public class ProductService {
 
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public void delete(Product product) {
 
         productRepository.delete(product);
 
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public void deleteByName(String name) {
 
         if (this.findByName(name) == null) {
@@ -69,18 +69,21 @@ public class ProductService {
 
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
     public List<Product> searchByName(String name) {
 
         return productRepository.findByNameContainingIgnoreCase(name);
 
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
     public Product findByName(String name) {
 
-        return productRepository.findByNameIgnoreCase(name);
+        return productRepository.findByNameIgnoreCase(name).orElse(null);
 
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public void updateProductByName(String name, String description, Double price, Integer stockQuantity) {
 
         if (name == null) {
@@ -108,6 +111,7 @@ public class ProductService {
 
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public void updateProductById(Long Id, String name, String description, Double price, Integer stockQuantity) {
 
         if (Id == null) {
@@ -116,7 +120,6 @@ public class ProductService {
 
         Product product = this.findById(Id);
         if (product == null) {
-            System.out.println("Product does not exist");
             throw new EntityNotFoundException("Product with name " + name + " not found.");
         }
 
@@ -137,6 +140,6 @@ public class ProductService {
         }
 
         productRepository.save(product);
-        
+
     }
 }

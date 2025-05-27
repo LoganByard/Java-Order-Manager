@@ -1,12 +1,7 @@
 package com.Logan.Java.Order.Manager.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.security.KeyStore;
 
@@ -26,8 +21,9 @@ public class Employee {
 
     private String lastName;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    // Password
+    private String password;
 
 }
