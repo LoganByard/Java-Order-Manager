@@ -112,13 +112,13 @@ public class ProductService {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
-    public void updateProductById(Long Id, String name, String description, Double price, Integer stockQuantity) {
+    public void updateProductById(Long id, String name, String description, Double price, Integer stockQuantity) {
 
-        if (Id == null) {
+        if (id == null) {
             throw new IllegalArgumentException("Id cannot be null.");
         }
 
-        Product product = this.findById(Id);
+        Product product = this.findById(id);
         if (product == null) {
             throw new EntityNotFoundException("Product with name " + name + " not found.");
         }
