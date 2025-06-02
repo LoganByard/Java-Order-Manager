@@ -22,7 +22,7 @@ public class OrderItemService {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
-    OrderItem createOrderItem(Product product, Order order, Integer quantity, Double unitPrice) {
+    public OrderItem createOrderItem(Product product, Order order, Integer quantity, Double unitPrice) {
 
         if (product == null || order == null || quantity == null || unitPrice == null) {
             throw new IllegalArgumentException("No field can be null");
@@ -36,42 +36,42 @@ public class OrderItemService {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
-    OrderItem findById(Long id) {
+    public OrderItem findById(Long id) {
 
         return orderItemRepository.findById(id).orElse(null);
 
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
-    List<OrderItem> findByOrder(Order order) {
+    public List<OrderItem> findByOrder(Order order) {
 
         return orderItemRepository.findByOrder(order);
 
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
-    void deleteOrderItemById(Long id) {
+    public void deleteOrderItemById(Long id) {
 
         orderItemRepository.deleteById(id);
 
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
-    void deleteOrderItem(OrderItem orderItem) {
+    public void deleteOrderItem(OrderItem orderItem) {
 
         orderItemRepository.delete(orderItem);
 
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
-    boolean existsByOrder(Order order) {
+    public boolean existsByOrder(Order order) {
 
         return orderItemRepository.existsByOrder(order);
 
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
-    void updateQuantity(Long id, Integer newQuantity) {
+    public void updateQuantity(Long id, Integer newQuantity) {
 
         if (id == null) {
             throw new IllegalArgumentException("id can not be null");
