@@ -8,9 +8,12 @@ import com.Logan.Java.Order.Manager.model.OrderItem;
 import com.Logan.Java.Order.Manager.repository.OrderRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.List;
 
+@Service
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -192,6 +195,13 @@ public class OrderService {
         }
 
         order.setFinalized(true);
+
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
+    public Order findById(Long id) {
+
+        return orderRepository.findById(id).orElse(null);
 
     }
 }
