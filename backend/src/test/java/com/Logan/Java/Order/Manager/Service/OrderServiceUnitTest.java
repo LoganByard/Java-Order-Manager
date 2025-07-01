@@ -37,10 +37,11 @@ public class OrderServiceUnitTest {
         Order mockOrder = new Order();
         mockOrder.setOrderDate(LocalDate.now());
         mockOrder.setTotalPrice(0.0);
+        Customer customer = new Customer(5L, "John", "Doe", "1", "example", "example", null);
 
         when(orderRepository.save(any(Order.class))).thenReturn(mockOrder);
 
-        Order createdOrder = orderService.createOrder();
+        Order createdOrder = orderService.createOrder(customer);
 
         assertNotNull(createdOrder);
         assertEquals(0.0, createdOrder.getTotalPrice());

@@ -25,7 +25,7 @@ public class OrderService {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
-    public Order createOrder() {
+    public Order createOrder(Customer customer) {
 
         Order order = new Order();
         order.setOrderDate(LocalDate.now());
